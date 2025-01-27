@@ -14,6 +14,8 @@ import (
 	"github.com/ollama/ollama/types/model"
 )
 
+var Version string
+
 // ollama environment variables:
 // envVars["OLLAMA_DEBUG"],
 // envVars["OLLAMA_HOST"],
@@ -41,10 +43,17 @@ func main() {
 	}
 	var privKeyPath string
 	flag.StringVar(&privKeyPath, "ssh-key", path, "Full qualified path to the ollama ssh key for authentication.")
-	flag.Parse()
+	versionFlag := flag.Bool("version", false, "Print the version and exit")
 
+	flag.Parse()
 	args := flag.Args()
 	fmt.Printf("started: %v\n", args)
+
+	if *versionFlag {
+		fmt.Printf("Version: %s\n", Version)
+		return
+	}
+
 	if len(args) != 1 {
 		fmt.Println("model required")
 		os.Exit(1)

@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-VERSION = $(shell git rev-parse HEAD)
+export VERSION := $(shell echo $(shell git describe --tags --always --match "v*") | sed 's/^v//')
 
 .PHONY: help
 help:
@@ -13,8 +13,11 @@ help:
 
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build -ldflags "-extldflags '-static'" -o build/ ./cmd/...
+	CGO_ENABLED=0 go build -ldflags "-extldflags '-static' -X main.Version=$(VERSION)"  -o build/ ./cmd/...
 
+.PHONY: build-linux-amd64
+build-linux-amd64:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-extldflags '-static' -X main.Version=$(VERSION)"  -o build/opull-$(VERSION)-linux-amd64 ./cmd/...
 
 .PHONY: test
 test: test-unit
