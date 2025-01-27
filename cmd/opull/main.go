@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/alpe/ollama-utils/ollama/server"
 	"github.com/ollama/ollama/api"
@@ -58,7 +59,12 @@ func main() {
 		fmt.Println("model required")
 		os.Exit(1)
 	}
-	name := model.ParseName(args[0])
+	// replace ollama:// schema when set
+	firstArg := args[0]
+	if strings.HasPrefix(firstArg, "ollama://") {
+		firstArg = "https://" + firstArg[len("ollama://"):]
+	}
+	name := model.ParseName(firstArg)
 	if !name.IsValid() {
 		fmt.Println("invalid model name")
 		os.Exit(1)
