@@ -18,6 +18,7 @@ build:
 .PHONY: build-linux-amd64
 build-linux-amd64:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-extldflags '-static' -X main.Version=$(VERSION)"  -o build/opull-$(VERSION)-linux-amd64 ./cmd/...
+	sha256sum build/opull-$(VERSION)-linux-amd64 > build/opull-$(VERSION)-linux-amd64.sha256
 
 .PHONY: test
 test: test-unit

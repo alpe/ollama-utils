@@ -42,7 +42,7 @@ func main() {
 		fmt.Printf("failed to get default key path: %s\n", err)
 		os.Exit(1)
 	}
-	var privKeyPath string
+	var privKeyPath string // todo: read from env instead
 	flag.StringVar(&privKeyPath, "ssh-key", path, "Full qualified path to the ollama ssh key for authentication.")
 	versionFlag := flag.Bool("version", false, "Print the version and exit")
 
