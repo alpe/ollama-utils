@@ -3,7 +3,7 @@ module github.com/alpe/ollama-utils
 go 1.24.0
 
 require (
-	github.com/ollama/ollama v0.7.1
+	github.com/ollama/ollama v0.9.2
 	golang.org/x/crypto v0.38.0
 	golang.org/x/sync v0.14.0
 )
